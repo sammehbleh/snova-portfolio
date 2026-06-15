@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Menu, X, ChevronDown, Star, Mail, Phone, MapPin, Instagram, Facebook, Twitter, Sun, Moon, Check, AlertCircle } from "lucide-react";
+import { Menu, X, ChevronDown, Star, Mail, Phone, MapPin, Instagram, Facebook, Twitter, Sun, Moon, Check, AlertCircle, Printer, Frame, Sparkles } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import heroBg from "../imports/image.png";
 import logo from "../img/snovalogo.png";
@@ -52,7 +52,7 @@ const ARTWORKS = [
 const SERVICES = [
   {
     label: "Collector's Poster Edition",
-    icon: "🖨",
+    icon: Printer,
     tagline: "An affordable collectible piece",
     description:
       "Printed copy of the original artwork limited to authenticated copies in 2 x 2.5ft. (size will depend on the artwork’s size without changing the orientation and overall size)", // Description from prompt
@@ -62,7 +62,7 @@ const SERVICES = [
   },
   {
     label: "Signature Framed Edition",
-    icon: "🎨",
+    icon: Frame,
     tagline: "Gallery-inspired presentation",
     description:
       "Full-size reproduction matching the original artwork.", // Concise description, details in features
@@ -73,7 +73,7 @@ const SERVICES = [
   },
   {
     label: "Original Masterpiece",
-    icon: "✦",
+    icon: Sparkles,
     tagline: "One-of-a-Kind Originals",
     description:
       "Own a singular, irreplaceable piece. Each original artwork is a unique expression—no two are alike. Comes with full provenance documentation and lifetime artist support.",
@@ -667,7 +667,9 @@ export default function App() {
                   style={{ background: `linear-gradient(to right, transparent, ${v("site-teal")}, transparent)` }}
                 />
 
-                <div className="text-3xl mb-5">{svc.icon}</div>
+                <div className="mb-5" style={{ color: v("site-text") }}>
+                  <svc.icon size={32} strokeWidth={1.5} />
+                </div>
                 <h3 className="text-2xl font-normal mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
                   {svc.label}
                 </h3>
@@ -815,7 +817,9 @@ export default function App() {
                   </span>
                 )}
               </div>
-              <div className="text-6xl mb-4">{selectedService.icon}</div>
+              <div className="mb-4" style={{ color: v("site-text") }}>
+                <selectedService.icon size={56} strokeWidth={1.2} />
+              </div>
               <h3 className="text-5xl font-normal mb-2" style={{ fontFamily: "'Playfair Display', serif", color: v("site-text") }}>
                 {selectedService.label}
               </h3>
