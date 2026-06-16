@@ -61,7 +61,7 @@ const SERVICES = [
     price: "₱499",
   },
   {
-    label: "Signature Framed Edition",
+    label: "Collector's Replica Framed Edition",
     icon: Frame,
     tagline: "Gallery-inspired presentation",
     description:
