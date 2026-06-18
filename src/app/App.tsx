@@ -7,6 +7,7 @@ import profile from "../img/profile.jpg";
 import fear from "../img/fear.jpg";
 import anger from "../img/anger.png";
 import joker from "../img/joker.jpg";
+import authenticityImg from "../img/authenticity.jpg";
 
 const NAV_LINKS = ["Home", "Services", "Portfolio", "About Us", "Testimonials", "Contact Us"];
 
@@ -57,8 +58,7 @@ const SERVICES = [
     description:
       "Printed copy of the original artwork limited to authenticated copies in 2 x 2.5ft. (size will depend on the artwork’s size without changing the orientation and overall size)", // Description from prompt
     features: ["Premium poster print", "Artist's signature", "Limited to 7 Copies", "Artwork details on the reverse side", "Authenticity Card", "3-Day Creation", "Note: An affordable way to own a collectible piece from the collection."],
-    tags: ["Collectible", "Limited Edition", "Affordable"],
-    price: "₱499",
+    tags: ["Collectible", "Limited Edition", "Affordable"]
   },
   {
     label: "Collector's Replica Framed Edition",
@@ -66,10 +66,9 @@ const SERVICES = [
     tagline: "Gallery-inspired presentation",
     description:
       "Full-size reproduction matching the original artwork.", // Concise description, details in features
-    features: ["Full-size reproduction matching the original artwork", "Limited to 7 Copies", "Premium frame of your choice", "Artist's signature", "Artwork details on the reverse side", "Authenticity Card", "3-Day Creation", "Note: Designed for collectors seeking a gallery-inspired presentation."],
+    features: ["Full-size printed reproduction matching the original artwork", "Limited to 7 Copies", "With Frame", "Artist's signature", "Artwork details on the reverse side", "Authenticity Card", "3-Day Creation", "Note: Designed for collectors seeking a gallery-inspired presentation."],
     tags: ["Framed", "Reproduction", "Limited Edition", "Customizable"],
-    price: "₱729",
-    priceNote: "(Price varies depending on frame selection and artwork size.)",
+    priceNote: "(Price varies depending on frame selection and artwork size.)"
   },
   {
     label: "Original Masterpiece",
@@ -77,9 +76,8 @@ const SERVICES = [
     tagline: "One-of-a-Kind Originals",
     description:
       "Own a singular, irreplaceable piece. Each original artwork is a unique expression—no two are alike. Comes with full provenance documentation and lifetime artist support.",
-    features: ["Unique, never reproduced", "Full provenance papers", "Artist-signed & dated", "5-Day Creation", "Collector investment value"],
-    tags: ["Exclusive", "One-of-a-kind", "Investment"],
-    price: "From $1,200",
+    features: ["original artwork/painting itself", "Full provenance papers", "Artist-signed & dated", "3-Day Shipping Process", "Collector investment value"],
+    tags: ["Exclusive", "One-of-a-kind", "Investment"]
   },
 ];
 
@@ -231,6 +229,7 @@ export default function App() {
   const [sending, setSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [authenticityOpen, setAuthenticityOpen] = useState(false);
 
   useEffect(() => {
     applyTokens(dark ? DARK : LIGHT);
@@ -651,7 +650,7 @@ export default function App() {
             {SERVICES.map((svc, i) => (
               <div
                 key={svc.label}
-                className={`relative group border rounded-2xl p-8 transition-all duration-500 cursor-pointer ${i === 1 ? "md:-mt-6 md:mb-6" : ""}`}
+                className="relative group border rounded-2xl p-8 transition-all duration-500 cursor-pointer h-full flex flex-col justify-between"
                 style={{
                   background:  v("site-card"),
                   borderColor: v("site-border"),
@@ -666,27 +665,28 @@ export default function App() {
                   style={{ background: `linear-gradient(to right, transparent, ${v("site-teal")}, transparent)` }}
                 />
 
-                <div className="mb-5" style={{ color: v("site-text") }}>
-                  <svc.icon size={32} strokeWidth={1.5} />
-                </div>
-                <h3 className="text-2xl font-normal mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  {svc.label}
-                </h3>
-                <p className="text-[10px] tracking-[0.25em] uppercase mb-4" style={{ color: v("site-gold") }}>{svc.tagline}</p>
-                <p className="text-sm leading-relaxed mb-6 font-light" style={{ color: v("site-muted") }}>{svc.description}</p>
+                <div className="flex-1">
+                  <div className="mb-5" style={{ color: v("site-text") }}>
+                    <svc.icon size={32} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-2xl font-normal mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+                    {svc.label}
+                  </h3>
+                  <p className="text-[10px] tracking-[0.25em] uppercase mb-4" style={{ color: v("site-gold") }}>{svc.tagline}</p>
+                  <p className="text-sm leading-relaxed mb-6 font-light" style={{ color: v("site-muted") }}>{svc.description}</p>
 
-                <ul className="space-y-2 mb-8">
-                  {svc.features.map((f) => (
-                    <li key={f} className="flex items-center gap-3 text-xs opacity-80" style={{ color: v("site-text") }}>
-                      <span className="text-[8px]" style={{ color: v("site-gold") }}>◆</span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="space-y-2 mb-8">
+                    {svc.features.map((f) => (
+                      <li key={f} className="flex items-center gap-3 text-xs opacity-80" style={{ color: v("site-text") }}>
+                        <span className="text-[8px]" style={{ color: v("site-gold") }}>◆</span>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <div className="flex flex-col items-center gap-4 border-t pt-6" style={{ borderColor: v("site-divider") }}>
                   <div className="flex flex-col items-center text-center">
-                    <span className="font-semibold tracking-wide" style={{ color: "#f5d894" }}>{svc.price}</span>
                     {svc.priceNote && (
                       <span className="text-[10px] font-light mt-1 opacity-80" style={{ color: "#f5d894" }}>{svc.priceNote}</span>
                     )}
@@ -705,7 +705,7 @@ export default function App() {
             ))}
           </div>
 
-          <div className="mt-14 flex justify-center">
+          <div className="mt-14 flex flex-wrap justify-center gap-4">
             <button
               onClick={() => scrollTo("Portfolio")}
               className="inline-flex items-center gap-3 px-8 py-4 rounded-xl border text-xs tracking-[0.25em] uppercase font-semibold transition-all duration-300"
@@ -715,6 +715,16 @@ export default function App() {
             >
               View Portfolio
               <ChevronDown size={14} />
+            </button>
+            <button
+              onClick={() => setAuthenticityOpen(true)}
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl border text-xs tracking-[0.25em] uppercase font-semibold transition-all duration-300"
+              style={{ borderColor: "#f5d894", color: "#f5d894" }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = v("site-teal"); e.currentTarget.style.color = "white"; e.currentTarget.style.borderColor = v("site-teal"); }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#f5d894"; }}
+            >
+              Sample authenticity card
+              <Sparkles size={14} className="ml-1" />
             </button>
           </div>
         </div>
@@ -809,7 +819,6 @@ export default function App() {
 
             <div className="text-center mb-8">
               <div className="inline-flex flex-col items-center px-6 py-2 rounded-2xl mb-6 border" style={{ borderColor: "#f5d894", color: "#f5d894" }}>
-                <span className="text-2xl font-bold">{selectedService.price}</span>
                 {selectedService.priceNote && (
                   <span className="text-[13px] font-normal mt-1 max-w-[220px] leading-tight opacity-90">
                     {selectedService.priceNote}
@@ -855,6 +864,36 @@ export default function App() {
             >
               Book this Service
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── AUTHENTICITY CARD POPUP ── */}
+      {authenticityOpen && (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center px-4 py-6"
+          style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(12px)" }}
+          onClick={() => setAuthenticityOpen(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="relative w-full max-w-2xl overflow-hidden rounded-3xl border p-6 text-center"
+            style={{ background: v("site-card"), borderColor: v("site-border") }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setAuthenticityOpen(false)}
+              className="absolute right-6 top-6 text-muted-foreground hover:text-foreground"
+              style={{ color: v("site-muted") }}
+            >
+              <X size={24} />
+            </button>
+            <img
+              src={authenticityImg}
+              alt="Sample Authenticity Card"
+              className="w-full h-auto max-h-[70vh] rounded-xl object-contain mt-4"
+            />
           </div>
         </div>
       )}
