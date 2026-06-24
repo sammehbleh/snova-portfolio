@@ -120,7 +120,7 @@ export const COLLECTION_ARTWORKS: Artwork[] = [
   },
   {
     id: 10,
-    title: "Alien",
+    title: "Mike Watowski",
     category: "Characters",
     medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
     dimensions: "1/8 Illustration Board",
