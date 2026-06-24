@@ -31,8 +31,66 @@ export type Artwork = {
   img: string;
 };
 
-/* The four pieces featured on the landing page's Portfolio section */
+/* The six pieces featured on the landing page's Portfolio section */
 export const FEATURED_ARTWORKS: Artwork[] = [
+  {
+    id: 21,
+    title: "Lays",
+    category: "3D/Semi-Realistic",
+    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
+    dimensions: "1/8 Illustration Board",
+    availability: "Sold",
+    img: lays,
+  },
+  {
+    id: 13,
+    title: "Cheezy",
+    category: "3D/Semi-Realistic",
+    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
+    dimensions: "1/8 Illustration Board",
+    availability: "Sold",
+    img: cheezy,
+  },
+  {
+    id: 3,
+    title: "Joker",
+    category: "Characters",
+    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
+    dimensions: "1/8 Illustration Board",
+    availability: "Sold",
+    img: joker,
+  },
+  {
+    id: 5,
+    title: "Pennywise",
+    category: "Characters",
+    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
+    dimensions: "1/8 Illustration Board",
+    availability: "Sold",
+    img: pennywise,
+  },
+  {
+    id: 16,
+    title: "Eggs",
+    category: "3D/Semi-Realistic",
+    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
+    dimensions: "Half of A4",
+    availability: "Sold",
+    img: eggs,
+  },
+  {
+    id: 7,
+    title: "Oishi",
+    category: "3D/Semi-Realistic",
+    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
+    dimensions: "1/8 Illustration Board",
+    availability: "Sold",
+    img: oishi,
+  },
+];
+
+/* The rest of the collection, pulled from the local img folder */
+export const COLLECTION_ARTWORKS: Artwork[] = [
   {
     id: 1,
     title: "Envy",
@@ -52,15 +110,6 @@ export const FEATURED_ARTWORKS: Artwork[] = [
     img: anger,
   },
   {
-    id: 3,
-    title: "Joker",
-    category: "Characters",
-    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
-    dimensions: "1/8 Illustration Board",
-    availability: "Sold",
-    img: joker,
-  },
-  {
     id: 4,
     title: "Multiple",
     category: "3D/Semi-Realistic",
@@ -68,19 +117,6 @@ export const FEATURED_ARTWORKS: Artwork[] = [
     dimensions: "1/8 Illustration Board",
     availability: "Sold",
     img: multiple,
-  },
-];
-
-/* The rest of the collection, pulled from the local img folder */
-export const COLLECTION_ARTWORKS: Artwork[] = [
-  {
-    id: 5,
-    title: "Pennywise",
-    category: "Characters",
-    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
-    dimensions: "1/8 Illustration Board",
-    availability: "Sold",
-    img: pennywise,
   },
   {
     id: 6,
@@ -90,15 +126,6 @@ export const COLLECTION_ARTWORKS: Artwork[] = [
     dimensions: "1/8 Illustration Board",
     availability: "Sold",
     img: frenchfries,
-  },
-  {
-    id: 7,
-    title: "Oishi",
-    category: "3D/Semi-Realistic",
-    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
-    dimensions: "1/8 Illustration Board",
-    availability: "Sold",
-    img: oishi,
   },
   {
     id: 8,
@@ -146,15 +173,6 @@ export const COLLECTION_ARTWORKS: Artwork[] = [
     img: crunch,
   },
   {
-    id: 13,
-    title: "Cheezy",
-    category: "3D/Semi-Realistic",
-    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
-    dimensions: "1/8 Illustration Board",
-    availability: "Sold",
-    img: cheezy,
-  },
-  {
     id: 14,
     title: "Chips Ahoy",
     category: "3D/Semi-Realistic",
@@ -171,15 +189,6 @@ export const COLLECTION_ARTWORKS: Artwork[] = [
     dimensions: "Half of A4",
     availability: "Sold",
     img: kopiko,
-  },
-  {
-    id: 16,
-    title: "Eggs",
-    category: "3D/Semi-Realistic",
-    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
-    dimensions: "Half of A4",
-    availability: "Sold",
-    img: eggs,
   },
   {
     id: 17,
@@ -217,16 +226,7 @@ export const COLLECTION_ARTWORKS: Artwork[] = [
     availability: "Sold",
     img: kisses,
   },
-  {
-    id: 21,
-    title: "Lays",
-    category: "3D/Semi-Realistic",
-    medium: "Mixed Media; Colored Pencil, Colored Marker and Acrylic Paint",
-    dimensions: "1/8 Illustration Board",
-    availability: "Sold",
-    img: lays,
-  },
 ];
 
-/* Full gallery: the 3 featured pieces plus everything else in the collection */
+/* Full gallery: the featured pieces plus everything else in the collection */
 export const GALLERY_ARTWORKS: Artwork[] = [...FEATURED_ARTWORKS, ...COLLECTION_ARTWORKS];

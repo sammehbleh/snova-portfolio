@@ -6,6 +6,7 @@ import heroBg from "../imports/image.png";
 import logo from "../img/snovalogo.png";
 import profile from "../img/profile.jpg";
 import authenticityImg from "../img/authenticity.jpg";
+import seriesOneImg from "../img/wip.jpg";
 import { DARK, LIGHT, applyTokens, v } from "./theme";
 import { FEATURED_ARTWORKS as ARTWORKS } from "./data/artworks";
 
@@ -553,6 +554,47 @@ export default function App() {
         </button>
       </section>
 
+      {/* ── SERIES SPOTLIGHT ── */}
+      <section className="relative py-20 sm:py-28 lg:py-32 overflow-hidden" style={{ background: v("site-bg-alt") }}>
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: `linear-gradient(to right, transparent, ${v("site-gold")}, transparent)`, opacity: 0.3 }} />
+
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-12 grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16 items-center">
+          {/* Image */}
+          <div className="order-1 lg:order-2 relative">
+            <div className="relative max-w-2xl lg:max-w-none mx-auto lg:mx-0 lg:ml-auto">
+              <div
+                className="absolute inset-0 border rounded-2xl translate-x-4 -translate-y-4 opacity-30"
+                style={{ borderColor: v("site-gold") }}
+              />
+              <img
+                src={seriesOneImg}
+                alt="Series 1: Verdant Cravings"
+                className="relative z-10 w-full h-auto rounded-2xl"
+              />
+            </div>
+          </div>
+
+          {/* Text */}
+          <div className="order-2 lg:order-1">
+            <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-7">
+              <div className="h-px w-12 sm:w-14 opacity-60" style={{ background: "#f5e500" }} />
+              <span className="text-xs sm:text-sm tracking-[0.3em] sm:tracking-[0.4em] uppercase" style={{ color: "#f5e500" }}>
+                Series 1
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-normal mb-6 sm:mb-7 leading-snug" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <em className="italic" style={{ color: "#1ABC9C" }}>Verdant Cravings</em>
+            </h2>
+            <p className="text-lg sm:text-xl leading-relaxed font-light max-w-md mb-6 sm:mb-7" style={{ color: v("site-muted") }}>
+              Green color takes center stage. A love letter to green wrappers, guilty pleasures, and everyday bites.
+            </p>
+            <p className="text-sm sm:text-base uppercase tracking-[0.2em] sm:tracking-[0.25em]" style={{ color: v("site-gold") }}>
+              Medium <span style={{ color: "#00c4b4" }}>Acrylic on Canvas, 1 x 1.5 ft</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── SERVICES ── */}
       <section id="services" className="relative py-16 sm:py-24 lg:py-32" style={{ background: v("site-bg") }}>
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: `linear-gradient(to right, transparent, ${v("site-gold")}, transparent)`, opacity: 0.35 }} />
@@ -683,7 +725,7 @@ export default function App() {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 lg:gap-6">
             {ARTWORKS.map((art) => (
               <button
                 key={art.id}
