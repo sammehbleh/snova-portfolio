@@ -274,11 +274,11 @@ export default function App() {
                   className="text-xl lg:text-2xl font-light transition-colors duration-300"
                   style={{ fontFamily: "'Cormorant Unicase', serif", color: "white", letterSpacing: "0.25em" }}
                 >
-                  SNØVA
+                  SNØVA Select
                 </span>
               </div>
               <span className="text-[9px] tracking-[0.3em] uppercase -mt-0.5 transition-colors duration-300" style={{ color: scrolled ? v("site-muted") : "rgba(245, 229, 0, 0.8)" }}>
-                Select Art Website
+               Art Website
               </span>
             </div>
 
@@ -1302,9 +1302,9 @@ export default function App() {
                   className="text-2xl font-light"
                   style={{ fontFamily: "'Cormorant Unicase', serif", color: v("site-gold"), letterSpacing: "0.25em" }}
                 >
-                  SNØVA
+                  SNØVA Select
                 </span>
-                <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: v("site-muted") }}>Art Studio</span>
+                <span className="text-[10px] tracking-[0.3em] uppercase" style={{ color: v("site-muted") }}>Art Website</span>
               </div>
               <p className="text-sm leading-relaxed max-w-xs font-light mt-4" style={{ color: v("site-muted") }}>
                 Creating artworks that endure. Available as originals, replicas, and museum-quality
