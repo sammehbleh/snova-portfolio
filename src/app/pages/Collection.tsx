@@ -59,16 +59,16 @@ export default function Collection() {
       </div>
 
       {/* ── COLLECTION ── */}
-      <section className="py-10 lg:py-14">
-        <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
-          <div className="mb-8 lg:mb-10">
-            <div className="flex items-center gap-4 mb-3">
-              <div className="h-px w-12 opacity-60" style={{ background: "#f5d894" }} />
-              <span className="text-[12px] tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>
+      <section className="py-8 sm:py-10 lg:py-14">
+        <div className="max-w-[1600px] mx-auto px-5 sm:px-6 lg:px-12">
+          <div className="mb-6 sm:mb-8 lg:mb-10">
+            <div className="flex items-center gap-3 sm:gap-4 mb-3">
+              <div className="h-px w-10 sm:w-12 opacity-60" style={{ background: "#f5d894" }} />
+              <span className="text-[10px] sm:text-[12px] tracking-[0.3em] sm:tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>
                 Full Collection
               </span>
             </div>
-            <h1 className="text-4xl lg:text-6xl font-normal" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-normal" style={{ fontFamily: "'Playfair Display', serif" }}>
               Every <em className="italic" style={{ color: v("site-gold") }}>Artwork</em>
             </h1>
             <p className="text-sm leading-relaxed max-w-xl mt-3 font-light" style={{ color: v("site-muted") }}>
@@ -76,30 +76,30 @@ export default function Collection() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-5 lg:gap-6">
             {GALLERY_ARTWORKS.map((art) => (
               <button
                 key={art.id}
                 type="button"
                 onClick={() => setSelectedArtwork(art)}
-                className="group relative overflow-hidden rounded-2xl cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-[var(--site-teal)]"
+                className="group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-[var(--site-teal)]"
                 aria-label={`View details for ${art.title}`}
               >
-                <div className="aspect-[3/4] relative overflow-hidden rounded-2xl" style={{ background: v("site-card") }}>
+                <div className="aspect-[3/4] relative overflow-hidden rounded-xl sm:rounded-2xl" style={{ background: v("site-card") }}>
                   <img
                     src={art.img}
                     alt={art.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105 opacity-90 group-hover:opacity-100"
                   />
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    className="absolute inset-0 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{ background: `linear-gradient(to top, ${v("site-bg")} 0%, transparent 60%)` }}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <p className="text-[11px] tracking-[0.3em] uppercase mb-1" style={{ color: v("site-gold") }}>
+                  <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 translate-y-0 sm:translate-y-4 opacity-100 sm:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <p className="text-[9px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] uppercase mb-1" style={{ color: v("site-gold") }}>
                       {art.medium} · {art.year}
                     </p>
-                    <p style={{ fontFamily: "'Playfair Display', serif", color: v("site-text") }} className="text-xl italic">
+                    <p style={{ fontFamily: "'Playfair Display', serif", color: v("site-text") }} className="text-base sm:text-xl italic leading-tight">
                       {art.title}
                     </p>
                   </div>
@@ -135,31 +135,31 @@ export default function Collection() {
               <X size={18} />
             </button>
 
-            <div className="min-h-[320px] overflow-hidden lg:min-h-[620px]">
+            <div className="min-h-[240px] sm:min-h-[320px] overflow-hidden lg:min-h-[620px]">
               <img src={selectedArtwork.img} alt={selectedArtwork.title} className="h-full w-full object-cover" />
             </div>
 
-            <div className="overflow-y-auto p-8 lg:p-12">
-              <div className="mb-8 flex items-center gap-4">
-                <div className="h-px w-12 opacity-60" style={{ background: "#f5d894" }} />
-                <span className="text-[12px] tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>
+            <div className="overflow-y-auto p-6 sm:p-8 lg:p-12">
+              <div className="mb-5 sm:mb-8 flex items-center gap-3 sm:gap-4">
+                <div className="h-px w-10 sm:w-12 opacity-60" style={{ background: "#f5d894" }} />
+                <span className="text-[10px] sm:text-[12px] tracking-[0.3em] sm:tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>
                   Collection Piece
                 </span>
               </div>
 
               <h3
                 id="collection-artwork-title"
-                className="mb-4 text-6xl font-normal leading-tight lg:text-7xl"
+                className="mb-3 sm:mb-4 text-3xl sm:text-5xl font-normal leading-tight lg:text-7xl"
                 style={{ fontFamily: "'Playfair Display', serif", color: v("site-text") }}
               >
                 {selectedArtwork.title}
               </h3>
 
-              <p className="mb-8 text-lg leading-relaxed font-light" style={{ color: v("site-muted") }}>
+              <p className="mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed font-light" style={{ color: v("site-muted") }}>
                 {selectedArtwork.description}
               </p>
 
-              <div className="grid gap-4 border-y py-6" style={{ borderColor: v("site-divider") }}>
+              <div className="grid gap-3 sm:gap-4 border-y py-5 sm:py-6" style={{ borderColor: v("site-divider") }}>
                 {[
                   ["Medium", selectedArtwork.medium],
                   ["Made Date", selectedArtwork.madeDate],
@@ -168,7 +168,7 @@ export default function Collection() {
                   ["Availability", selectedArtwork.availability],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-center justify-between gap-6">
-                    <span className="text-[12px] uppercase tracking-[0.25em]" style={{ color: "#00c4b4" }}>{label}</span>
+                    <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] sm:tracking-[0.25em]" style={{ color: "#00c4b4" }}>{label}</span>
                     <span className="text-right text-sm" style={{ color: "#f5d894" }}>{value}</span>
                   </div>
                 ))}
@@ -177,7 +177,7 @@ export default function Collection() {
               <button
                 type="button"
                 onClick={() => navigate("/#contact-us")}
-                className="mt-8 inline-flex items-center justify-center rounded-xl px-8 py-4 text-base font-semibold uppercase tracking-[0.25em] transition-colors"
+                className="mt-6 sm:mt-8 inline-flex items-center justify-center rounded-xl px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-colors w-full sm:w-auto"
                 style={{ background: v("site-gold"), color: "white" }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = v("site-teal"))}
                 onMouseLeave={(e) => (e.currentTarget.style.background = v("site-gold"))}

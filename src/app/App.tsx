@@ -7,7 +7,7 @@ import logo from "../img/snovalogo.png";
 import profile from "../img/profile.jpg";
 import authenticityImg from "../img/authenticity.jpg";
 import { DARK, LIGHT, applyTokens, v } from "./theme";
-import { FEATURED_ARTWORKS as ARTWORKS, GALLERY_ARTWORKS } from "./data/artworks";
+import { FEATURED_ARTWORKS as ARTWORKS } from "./data/artworks";
 
 const NAV_LINKS = ["Home", "Services", "Portfolio", "About Us", "Testimonials", "Contact Us"];
 
@@ -88,7 +88,7 @@ const POLICY_DATA: Record<string, { title: string; content: string }> = {
   },
 };
 
-const HERO_SLIDES = GALLERY_ARTWORKS.map((art) => ({
+const HERO_SLIDES = ARTWORKS.map((art) => ({
   img: art.img,
   title: art.title,
   medium: art.medium,
@@ -104,6 +104,7 @@ export default function App() {
   const [selectedArtwork, setSelectedArtwork] = useState<(typeof ARTWORKS)[number] | null>(null);
   const [selectedService, setSelectedService] = useState<(typeof SERVICES)[number] | null>(null);
   const [activePolicy, setActivePolicy] = useState<string | null>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const [sending, setSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -116,9 +117,19 @@ export default function App() {
   }, [dark]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    // Switch the floating/opaque nav style only once the hero has mostly scrolled
+    // out of view, so it never sits as a solid block over the hero heading.
+    const onScroll = () => {
+      const heroBottom = heroRef.current?.getBoundingClientRect().bottom ?? 0;
+      setScrolled(heroBottom < 90);
+    };
+    onScroll();
     window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   // Auto-cycle hero slides
@@ -344,7 +355,7 @@ export default function App() {
       </div>
 
       {/* ── HERO ── always dark regardless of theme — it's a photo bg */}
-      <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+      <section ref={heroRef} id="home" className="relative min-h-[100svh] lg:min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={heroBg}
@@ -370,65 +381,88 @@ export default function App() {
           style={{ background: `linear-gradient(to bottom, transparent, ${navPurple}, transparent)` }}
         />
 
-        <div className="relative w-full max-w-[1500px] mx-auto px-6 lg:px-10 xl:px-16 pt-28 pb-20 lg:pt-32 lg:pb-16 grid lg:grid-cols-[1.05fr_0.95fr] gap-10 xl:gap-16 items-center">
+        <div className="relative w-full max-w-[1500px] mx-auto px-5 sm:px-6 lg:px-10 xl:px-16 pt-24 pb-10 lg:pt-32 lg:pb-16 grid lg:grid-cols-[1.05fr_0.95fr] gap-8 xl:gap-16 items-center">
           <div>
             {/* Hero text always uses fixed light colours — never theme vars */}
-            <div className="flex items-center gap-4 mb-6 lg:mb-8">
-              <div className="h-px w-14 bg-[#f5e500]" />
-              <span className="text-[11px] lg:text-xs tracking-[0.4em] uppercase text-[#f5e500]">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 lg:mb-8">
+              <div className="h-px w-10 sm:w-14 bg-[#f5e500]" />
+              <span className="text-[10px] sm:text-[11px] lg:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase text-[#f5e500]">
                 Original · Replica · Print
               </span>
             </div>
 
             <h1
-              className="text-6xl sm:text-7xl lg:text-8xl xl:text-[6.8rem] font-normal leading-[1.02] mb-7 lg:mb-8 text-[#f0e6d3]"
+              className="text-[2.6rem] leading-[1.05] sm:text-6xl sm:leading-[1.03] lg:text-8xl xl:text-[6.8rem] font-normal mb-4 sm:mb-7 lg:mb-8 text-[#f0e6d3]"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               When <br></br>
               <em className="italic text-[#f5e500]">Creativity </em>Becomes
               <br />
-              <em className="italic text-[#f5e500]">Visual</em> 
-              <br />
+              <em className="italic text-[#f5e500]">Visual</em>
             </h1>
 
-            <p className="text-lg lg:text-xl leading-relaxed max-w-2xl mb-9 lg:mb-10 font-light text-[#c8b8a8]">
+            <p className="text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl mb-6 sm:mb-9 lg:mb-10 font-light text-[#c8b8a8]">
               Every piece carries a story. From collector-grade originals to museum-quality prints,
               discover works that transform your space into a living gallery.
             </p>
 
-            <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
               <button
                 onClick={() => scrollTo("Services")}
-                className="px-9 py-4 lg:px-10 lg:py-5 text-xs lg:text-sm tracking-[0.25em] uppercase font-semibold bg-[#f5e500] text-[#1e1c1c] hover:bg-[#00c4b4] hover:text-white transition-colors duration-300"
+                className="px-7 py-3.5 sm:px-9 sm:py-4 lg:px-10 lg:py-5 text-[11px] sm:text-xs lg:text-sm tracking-[0.2em] sm:tracking-[0.25em] uppercase font-semibold bg-[#f5e500] text-[#1e1c1c] hover:bg-[#00c4b4] hover:text-white transition-colors duration-300"
               >
                 Explore Collection
               </button>
               <button
                 onClick={() => scrollTo("About Us")}
-                className="px-9 py-4 lg:px-10 lg:py-5 border border-[rgba(245, 229, 0, 0.5)] text-[#f5e500] hover:border-[#00c4b4] hover:text-[#00c4b4] text-xs lg:text-sm tracking-[0.25em] uppercase transition-colors duration-300"
+                className="px-7 py-3.5 sm:px-9 sm:py-4 lg:px-10 lg:py-5 border border-[rgba(245, 229, 0, 0.5)] text-[#f5e500] hover:border-[#00c4b4] hover:text-[#00c4b4] text-[11px] sm:text-xs lg:text-sm tracking-[0.2em] sm:tracking-[0.25em] uppercase transition-colors duration-300"
               >
                 Meet the Artist
               </button>
             </div>
 
-            <div className="mt-10 lg:hidden">
-              <div className="relative aspect-[4/5] max-h-[42vh] overflow-hidden rounded-2xl">
-                <img
-                  src={HERO_SLIDES[heroSlide].img}
-                  alt={HERO_SLIDES[heroSlide].title}
-                  className="h-full w-full object-cover"
-                />
-                <div
-                  className="absolute inset-x-0 bottom-0 p-5"
-                  style={{ background: "linear-gradient(to top, rgba(4,0,10,0.92) 0%, transparent 100%)" }}
-                >
-                  <p className="text-[10px] tracking-[0.3em] uppercase mb-1 text-[#7a35b8]">
-                    {HERO_SLIDES[heroSlide].medium}
-                  </p>
-                  <p style={{ fontFamily: "'Playfair Display', serif" }} className="text-lg italic text-[#f0e6d3]">
-                    {HERO_SLIDES[heroSlide].title}
-                  </p>
+            <div className="mt-8 sm:mt-10 lg:hidden">
+              <div className="relative">
+                <div className="absolute inset-0 translate-x-3 translate-y-3 border rounded-2xl border-[rgba(122,53,184,0.3)]" />
+                <div className="relative aspect-[5/6] max-h-[36vh] sm:max-h-[40vh] overflow-hidden rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.35)] z-10">
+                  {HERO_SLIDES.map((slide, i) => (
+                    <img
+                      key={i}
+                      src={slide.img}
+                      alt={slide.title}
+                      className="absolute inset-0 h-full w-full object-cover transition-opacity duration-700"
+                      style={{ opacity: heroSlide === i ? 1 : 0 }}
+                    />
+                  ))}
+                  <div
+                    className="absolute inset-x-0 bottom-0 p-4 sm:p-5"
+                    style={{ background: "linear-gradient(to top, rgba(4,0,10,0.92) 0%, transparent 100%)" }}
+                  >
+                    <p className="text-[9px] sm:text-[10px] tracking-[0.3em] uppercase mb-1 text-[#7a35b8]">
+                      {HERO_SLIDES[heroSlide].medium}
+                    </p>
+                    <p style={{ fontFamily: "'Playfair Display', serif" }} className="text-base sm:text-lg italic text-[#f0e6d3]">
+                      {HERO_SLIDES[heroSlide].title}
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              {/* Dot indicators */}
+              <div className="flex items-center justify-center gap-2 mt-4">
+                {HERO_SLIDES.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setHeroSlide(i)}
+                    aria-label={`Go to slide ${i + 1}`}
+                    className="rounded-full transition-all duration-300"
+                    style={{
+                      width: heroSlide === i ? "22px" : "6px",
+                      height: "6px",
+                      background: heroSlide === i ? "#7a35b8" : "rgba(122,53,184,0.35)",
+                    }}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -497,7 +531,7 @@ export default function App() {
 
         <button
           onClick={() => scrollTo("Services")}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
+          className="hidden lg:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer"
         >
           <span className="text-[9px] tracking-[0.4em] uppercase text-[#f5e500]">Scroll</span>
           <ChevronDown size={16} className="text-[#f5e500] animate-bounce" />
@@ -505,31 +539,31 @@ export default function App() {
       </section>
 
       {/* ── SERVICES ── */}
-      <section id="services" className="relative py-32" style={{ background: v("site-bg") }}>
+      <section id="services" className="relative py-16 sm:py-24 lg:py-32" style={{ background: v("site-bg") }}>
         <div className="absolute top-0 left-0 right-0 h-px" style={{ background: `linear-gradient(to right, transparent, ${v("site-gold")}, transparent)`, opacity: 0.35 }} />
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="text-center mb-20">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="h-px w-12 opacity-60" style={{ background: "#f5d894" }} />
-              <span className="text-[10px] tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>ART IN THREE WAYS. ONE VISION.</span>
-              <div className="h-px w-12 opacity-60" style={{ background: "#f5d894" }} />
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12">
+          <div className="text-center mb-10 sm:mb-14 lg:mb-20">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="h-px w-8 sm:w-12 opacity-60" style={{ background: "#f5d894" }} />
+              <span className="text-[9px] sm:text-[10px] tracking-[0.3em] sm:tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>ART IN THREE WAYS. ONE VISION.</span>
+              <div className="h-px w-8 sm:w-12 opacity-60" style={{ background: "#f5d894" }} />
             </div>
-            <h2 className="text-4xl lg:text-5xl font-normal" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-normal" style={{ fontFamily: "'Playfair Display', serif" }}>
               Collectors' <em className="italic" style={{ color: v("site-gold") }}>Options</em>
             </h2>
-            <p className="text-sm leading-relaxed max-w-xl mx-auto mt-4 font-light" style={{ color: v("site-muted") }}>
+            <p className="text-sm leading-relaxed max-w-xl mx-auto mt-3 sm:mt-4 font-light" style={{ color: v("site-muted") }}>
               Every artwork is a story, a moment, a piece of the artist's heart.
               Choose the way you want to own it.
               Each option is created with quality, authenticity, and exclusivity.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:gap-8">
             {SERVICES.map((svc, i) => (
               <div
                 key={svc.label}
-                className="relative group border rounded-2xl p-8 transition-all duration-500 cursor-pointer h-full flex flex-col justify-between"
+                className={`relative group border rounded-2xl p-4 sm:p-6 md:p-8 transition-all duration-500 cursor-pointer h-full flex flex-col justify-between ${i === 2 ? "col-span-2 md:col-span-1" : ""}`}
                 style={{
                   background:  v("site-card"),
                   borderColor: v("site-border"),
@@ -545,16 +579,17 @@ export default function App() {
                 />
 
                 <div className="flex-1">
-                  <div className="mb-5" style={{ color: v("site-text") }}>
-                    <svc.icon size={32} strokeWidth={1.5} />
+                  <div className="mb-3 sm:mb-4 md:mb-5" style={{ color: v("site-text") }}>
+                    <svc.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8" strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-3xl font-normal mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  <h3 className="text-lg sm:text-2xl md:text-3xl font-normal mb-1 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                     {svc.label}
                   </h3>
-                  <p className="text-[11px] tracking-[0.25em] uppercase mb-4" style={{ color: v("site-gold") }}>{svc.tagline}</p>
-                  <p className="text-base leading-relaxed mb-6 font-light" style={{ color: v("site-muted") }}>{svc.description}</p>
+                  <p className="text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-2 sm:mb-3 md:mb-4" style={{ color: v("site-gold") }}>{svc.tagline}</p>
+                  <p className="hidden md:block text-base leading-relaxed mb-6 font-light" style={{ color: v("site-muted") }}>{svc.description}</p>
+                  <p className="md:hidden text-xs leading-relaxed mb-3 font-light line-clamp-2" style={{ color: v("site-muted") }}>{svc.description}</p>
 
-                  <ul className="space-y-2 mb-8">
+                  <ul className="hidden md:block space-y-2 mb-8">
                     {svc.features.map((f) => (
                       <li key={f} className="flex items-center gap-3 text-sm opacity-80" style={{ color: v("site-text") }}>
                         <span className="text-[8px]" style={{ color: v("site-gold") }}>◆</span>
@@ -564,18 +599,18 @@ export default function App() {
                   </ul>
                 </div>
 
-                <div className="flex flex-col items-center gap-4 border-t pt-6" style={{ borderColor: v("site-divider") }}>
+                <div className="flex flex-col items-center gap-2 sm:gap-3 md:gap-4 border-t pt-3 sm:pt-4 md:pt-6" style={{ borderColor: v("site-divider") }}>
                   <div className="flex flex-col items-center text-center">
                     {svc.priceNote && (
-                      <span className="text-[10px] font-light mt-1 opacity-80" style={{ color: "#f5d894" }}>{svc.priceNote}</span>
+                      <span className="hidden md:block text-[10px] font-light mt-1 opacity-80" style={{ color: "#f5d894" }}>{svc.priceNote}</span>
                     )}
                   </div>
                   <button
-                    className="text-[10px] tracking-[0.2em] uppercase transition-colors"
+                    className="text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase transition-colors"
                     style={{ color: v("site-text") }}
                     onMouseEnter={(e) => (e.currentTarget.style.color = v("site-teal"))}
                     onMouseLeave={(e) => (e.currentTarget.style.color = v("site-text"))}
-                    onClick={() => scrollTo("Contact Us")}
+                    onClick={(e) => { e.stopPropagation(); scrollTo("Contact Us"); }}
                   >
                     Inquire →
                   </button>
@@ -610,15 +645,15 @@ export default function App() {
       </section>
 
       {/* ── PORTFOLIO ── */}
-      <section id="portfolio" className="py-32" style={{ background: v("site-bg-alt") }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex items-end justify-between mb-16">
+      <section id="portfolio" className="py-16 sm:py-24 lg:py-32" style={{ background: v("site-bg-alt") }}>
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-12">
+          <div className="flex items-end justify-between mb-10 sm:mb-14 lg:mb-16">
             <div>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="h-px w-12 opacity-60" style={{ background: "#f5d894" }} />
-                <span className="text-[12px] tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>Portfolio</span>
+              <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                <div className="h-px w-10 sm:w-12 opacity-60" style={{ background: "#f5d894" }} />
+                <span className="text-[10px] sm:text-[12px] tracking-[0.3em] sm:tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>Portfolio</span>
               </div>
-              <h2 className="text-6xl lg:text-7xl font-normal" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-4xl sm:text-5xl lg:text-7xl font-normal" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Selected <em className="italic" style={{ color: v("site-gold") }}>Works</em>
               </h2>
             </div>
@@ -633,30 +668,30 @@ export default function App() {
             </button>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
             {ARTWORKS.map((art) => (
               <button
                 key={art.id}
                 type="button"
                 onClick={() => setSelectedArtwork(art)}
-                className="group relative overflow-hidden rounded-2xl cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-[var(--site-teal)]"
+                className="group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-[var(--site-teal)]"
                 aria-label={`View details for ${art.title}`}
               >
-                <div className="aspect-[3/4] relative overflow-hidden rounded-2xl" style={{ background: v("site-card") }}>
+                <div className="aspect-[3/4] relative overflow-hidden rounded-xl sm:rounded-2xl" style={{ background: v("site-card") }}>
                   <img
                     src={art.img}
                     alt={art.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 group-active:scale-105 opacity-90 group-hover:opacity-100"
                   />
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    className="absolute inset-0 opacity-90 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{ background: `linear-gradient(to top, ${v("site-bg")} 0%, transparent 60%)` }}
                   />
-                  <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                    <p className="text-[11px] tracking-[0.3em] uppercase mb-1" style={{ color: v("site-gold") }}>
+                  <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 translate-y-0 sm:translate-y-4 opacity-100 sm:opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <p className="text-[9px] sm:text-[11px] tracking-[0.25em] sm:tracking-[0.3em] uppercase mb-1" style={{ color: v("site-gold") }}>
                       {art.medium} · {art.year}
                     </p>
-                    <p style={{ fontFamily: "'Playfair Display', serif", color: v("site-text") }} className="text-2xl italic">
+                    <p style={{ fontFamily: "'Playfair Display', serif", color: v("site-text") }} className="text-base sm:text-2xl italic leading-tight">
                       {art.title}
                     </p>
                   </div>
@@ -923,7 +958,7 @@ export default function App() {
               <X size={18} />
             </button>
 
-            <div className="min-h-[320px] overflow-hidden lg:min-h-[620px]">
+            <div className="min-h-[240px] sm:min-h-[320px] overflow-hidden lg:min-h-[620px]">
               <img
                 src={selectedArtwork.img}
                 alt={selectedArtwork.title}
@@ -931,27 +966,27 @@ export default function App() {
               />
             </div>
 
-            <div className="overflow-y-auto p-8 lg:p-12">
-              <div className="mb-8 flex items-center gap-4">
-                <div className="h-px w-12 opacity-60" style={{ background: "#f5d894" }} />
-                <span className="text-[12px] tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>
+            <div className="overflow-y-auto p-6 sm:p-8 lg:p-12">
+              <div className="mb-5 sm:mb-8 flex items-center gap-3 sm:gap-4">
+                <div className="h-px w-10 sm:w-12 opacity-60" style={{ background: "#f5d894" }} />
+                <span className="text-[10px] sm:text-[12px] tracking-[0.3em] sm:tracking-[0.4em] uppercase" style={{ color: "#f5d894" }}>
                   Selected Work
                 </span>
               </div>
 
               <h3
                 id="artwork-detail-title"
-                className="mb-4 text-6xl font-normal leading-tight lg:text-7xl"
+                className="mb-3 sm:mb-4 text-3xl sm:text-5xl font-normal leading-tight lg:text-7xl"
                 style={{ fontFamily: "'Playfair Display', serif", color: v("site-text") }}
               >
                 {selectedArtwork.title}
               </h3>
 
-              <p className="mb-8 text-lg leading-relaxed font-light" style={{ color: v("site-muted") }}>
+              <p className="mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed font-light" style={{ color: v("site-muted") }}>
                 {selectedArtwork.description}
               </p>
 
-              <div className="grid gap-4 border-y py-6" style={{ borderColor: v("site-divider") }}>
+              <div className="grid gap-3 sm:gap-4 border-y py-5 sm:py-6" style={{ borderColor: v("site-divider") }}>
                 {[
                   ["Medium", selectedArtwork.medium],
                   ["Made Date", selectedArtwork.madeDate],
@@ -960,7 +995,7 @@ export default function App() {
                   ["Availability", selectedArtwork.availability],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-center justify-between gap-6">
-                    <span className="text-[12px] uppercase tracking-[0.25em]" style={{ color: "#00c4b4" }}>{label}</span>
+                    <span className="text-[11px] sm:text-[12px] uppercase tracking-[0.2em] sm:tracking-[0.25em]" style={{ color: "#00c4b4" }}>{label}</span>
                     <span className="text-right text-sm" style={{ color: "#f5d894" }}>{value}</span>
                   </div>
                 ))}
@@ -972,7 +1007,7 @@ export default function App() {
                   setSelectedArtwork(null);
                   setTimeout(() => scrollTo("Contact Us"), 120);
                 }}
-                className="mt-8 inline-flex items-center justify-center rounded-xl px-8 py-4 text-base font-semibold uppercase tracking-[0.25em] transition-colors"
+                className="mt-6 sm:mt-8 inline-flex items-center justify-center rounded-xl px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-colors w-full sm:w-auto"
                 style={{ background: v("site-gold"), color: "white" }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = v("site-teal"))}
                 onMouseLeave={(e) => (e.currentTarget.style.background = v("site-gold"))}

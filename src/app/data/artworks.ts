@@ -32,7 +32,7 @@ export type Artwork = {
   img: string;
 };
 
-/* The three pieces featured on the landing page's Portfolio section */
+/* The four pieces featured on the landing page's Portfolio section */
 export const FEATURED_ARTWORKS: Artwork[] = [
   {
     id: 1,
@@ -70,10 +70,6 @@ export const FEATURED_ARTWORKS: Artwork[] = [
       "A complex character study that balances light and darkness, employing mixed media to provide a contemporary edge and architectural depth.",
     img: joker,
   },
-];
-
-/* The rest of the collection, pulled from the local img folder */
-export const COLLECTION_ARTWORKS: Artwork[] = [
   {
     id: 4,
     title: "Multiple",
@@ -86,6 +82,10 @@ export const COLLECTION_ARTWORKS: Artwork[] = [
       "A layered composition of repeated forms, exploring rhythm and variation across a single canvas.",
     img: multiple,
   },
+];
+
+/* The rest of the collection, pulled from the local img folder */
+export const COLLECTION_ARTWORKS: Artwork[] = [
   {
     id: 5,
     title: "Pennywise",
